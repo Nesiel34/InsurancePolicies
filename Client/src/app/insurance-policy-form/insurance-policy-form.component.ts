@@ -88,7 +88,8 @@ export class InsurancePolicyFormComponent implements OnInit {
     this.insurancePolicyForm.markAllAsTouched();
     if (this.insurancePolicyForm.invalid) return;
     if (this.data) {
-      const insurancePolicy = { ...this.data, ...this.insurancePolicyForm.getRawValue() };
+      let insurancePolicyPrev = {...this.data,...this.insurancePolicyForm.getRawValue()};
+      const insurancePolicy = { UserID:this.user.id, ...insurancePolicyPrev };
       this.insurancePolicyService.updateInsurancePolicy(insurancePolicy).subscribe(() => {
         this.dialogRef.close(insurancePolicy);
       });
