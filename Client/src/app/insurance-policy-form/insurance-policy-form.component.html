@@ -1,0 +1,42 @@
+<form [formGroup]="insurancePolicyForm"  (submit)="save()">
+  <mat-dialog-content class="d-flex flex-column mt-3 p-2">
+  <mat-form-field>
+    <mat-label>מספר ביטוח</mat-label>
+    <input matInput formControlName="policyNumber">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>סכום ביטוח</mat-label>
+    <input type="tel" matInput formControlName="insuranceAmount" class="text-start">
+      @if(insurancePolicyForm.get('insuranceAmount')?.hasError('pattern')){
+        <mat-error>שדה סכום ביטוח יכול להכיל ספרות בלבד</mat-error>
+      }
+      @if(insurancePolicyForm.get('insuranceAmount')?.hasError('required')){
+        <mat-error>שדה חובה</mat-error>
+      }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>תאריך הביטוח</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate placeholder="תאריך התחלה" formControlName="startDate">
+      <input matEndDate placeholder="תאריך סיום" formControlName="endDate">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix  [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker>
+      <mat-date-range-picker-actions >
+        <button mat-raised-button color="primary" matDateRangePickerApply>אישור</button>
+        <button mat-button matDateRangePickerCancel>ביטול</button>
+      </mat-date-range-picker-actions>
+    </mat-date-range-picker>
+    @if(insurancePolicyForm.get('startDate')?.hasError('required')){
+      <mat-error>יש להזין תאריך תחילת ביטוח</mat-error>
+    }
+    @if(insurancePolicyForm.get('endDate')?.hasError('required')){
+      <mat-error>יש להזין תאריך סיום ביטוח</mat-error>
+    }
+  </mat-form-field>
+</mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" mat-button color="primary">אישור</button>
+    <button mat-button mat-dialog-close color="warn">ביטול</button>
+  </mat-dialog-actions>
+  </form>
